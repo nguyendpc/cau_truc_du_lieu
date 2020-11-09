@@ -80,6 +80,33 @@ void daoNguocTaoDSMoi(Node *&dau) {
 	dau = danhsachmoi;
 }
 
+void xoaCuoi(Node *&dau){
+	Node *tam;
+	tam = dau;
+	while(tam->next != NULL){
+		tam = tam->next;
+	}
+	tam->next = NULL;
+}
+
+void xoaViTri( Node *&dau, int vitri ){
+	int i = 0;
+	Node *tam;
+	tam  = dau;
+	while(tam->next!=NULL && i!= vitri ){
+		tam = tam->next;
+		++i;
+	}
+	if(i < vitri){
+		cout << "k ton tai vi tri can xoa" << endl;
+		return;
+	}
+	if(tam->next == NULL && i == vitri){
+		return	xoaCuoi(dau);
+	}
+	tam->next = tam->next->next;
+}
+
 int main(){
 	// khoi tao 1 nut rong
 	danhsach = NULL;
@@ -88,9 +115,9 @@ int main(){
 	// in danh sach
 	inDanhSach(danhsach);
 	//dao nguoc danh sach
-//	daoNguocTaoDSMoi(danhsach);
 	daoNguoc(danhsach);
 	// in danh sach
 	inDanhSach(danhsach);
-	
+	xoaViTri(danhsach,4);
+	inDanhSach(danhsach);
 }
