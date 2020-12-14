@@ -12,28 +12,40 @@ void khoiTao(Node *&root){
 	root = NULL;
 }
 
-
-void timX(Node *&root, int x ){
+void duyetLNR(Node *root){
 	if(root != NULL){
-		if(root->info != x){
-			timX(root->left,x);
-			timX(root->right,x);
-		}
+		duyetLNR(root->left);
+		cout << root->info << " ";
+		duyetLNR(root->right );
 	}
 }
 
-void mocNut(Node *&root, int y, char z){
-	if(root == NULL){
-		root = new Node;
-		root->info = y;
-		root->left = NULL;
-		root->right = NULL;
-	}else{
-		if( z == 'L'){
-			mocNut(root->left,y,z);
-		}else if( z == 'R'){
-			mocNut(root->right,y,z);
+void duyetLRN(Node *root){
+	if(root != NULL){
+		duyetLRN(root->left);
+		duyetLRN(root->right );
+		cout << root->info << " ";
+	}
+}
+
+
+int timX(Node *&root, int x, int y, int z ){
+	if(root != NULL){
+		if(root->info == x){
+			Node *p;
+			p = new Node;
+			p->info = y;
+			p->left = NULL;
+			p->right = NULL;
+			if( z == 'L'){
+				root->left = p;
+			}else if( z == 'R'){
+				root->right = p;
+			}
+			return 0;
 		}
+		timX(root->left,x,y,z);
+		timX(root->right ,x,y,z);
 	}
 }
 
@@ -50,23 +62,18 @@ void taoCay(Node *&root){
 		cin >> x;
 		cin >> y;
 		cin >> z;
-		timX(root,x);
-		mocNut(root,y,z);
+		
+		timX(root,x,y,z);
+		
 	}
 }
 
-void duyetLNR(Node *root){
-	if(root != NULL){
-		duyetLNR(root->left);
-		cout << root->info << " ";
-		duyetLNR(root->right );
-	}
-}
 
 
 int main(){
 	khoiTao(root);
 	taoCay(root);
 	duyetLNR(root);
-	
+	cout << endl;
+	duyetLRN(root);
 }
